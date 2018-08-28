@@ -111,19 +111,23 @@ public class DockerContainer {
             LOG.info("Image " + imageName + " not found, attempting to download.");
             docker.pull(imageName);
         }
-
+        
         ContainerConfig.Builder containerConfigBuilder = ContainerConfig.builder();
         if (StringUtils.isNotBlank(request.properties().get("Command"))) {
             containerConfigBuilder.cmd(splitIntoLinesAndTrimSpaces(request.properties().get("Command")).toArray(new String[]{}));
         }
 
-        final String hostConfig = request.properties().get("Hosts");
+        final HostConfig hostConfig =
+            HostConfig.builder()
+                .appendBinds(request.properties().get("Mounts"))
+                .extraHosts(request.properties().get("Hosts"))
+                .build();
 
         ContainerConfig containerConfig = containerConfigBuilder
                 .image(imageName)
                 .labels(labels)
                 .env(env)
-                .hostConfig(HostConfig.builder().extraHosts(new Hosts(hostConfig)).build())
+                .hostConfig(hostConfig)
                 .build();
 
         ContainerCreation container = docker.createContainer(containerConfig, containerName);
