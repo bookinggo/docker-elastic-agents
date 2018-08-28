@@ -32,6 +32,7 @@ public class GetProfileMetadataExecutor implements RequestExecutor {
     public static final Metadata IMAGE = new Metadata("Image", true, false);
     public static final Metadata COMMAND = new Metadata("Command", false, false);
     public static final Metadata ENVIRONMENT = new Metadata("Environment", false, false);
+    public static final Metadata MOUNTS = new Metadata("Mounts", false, false);
     public static final Metadata HOSTS = new HostMetadata();
 
     public static final List<Metadata> FIELDS = new ArrayList<>();
@@ -40,6 +41,7 @@ public class GetProfileMetadataExecutor implements RequestExecutor {
         FIELDS.add(IMAGE);
         FIELDS.add(COMMAND);
         FIELDS.add(ENVIRONMENT);
+        FIELDS.add(MOUNTS);
         FIELDS.add(HOSTS);
     }
 

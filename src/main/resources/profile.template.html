@@ -50,8 +50,8 @@
     </div>
 
     <div class="form_item_block">
-        <label ng-class="{'is-invalid-label': GOINPUTNAME[Mounts].$error.server}">Docker Mounts: <small>(Enter one parameter per line)</small></label>
-        <textarea ng-class="{'is-invalid-input': GOINPUTNAME[Mounts].$error.server}" type="text" ng-model="Mounts" ng-required="true" rows="7" placeholder="ls&#x000A;-al&#x000A;/usr/bin"></textarea>
+        <label ng-class="{'is-invalid-label': GOINPUTNAME[Mounts].$error.server}">Docker Mounts</label>
+        <textarea ng-class="{'is-invalid-input': GOINPUTNAME[Mounts].$error.server}" type="text" ng-model="Mounts" ng-required="true" rows="1" placeholder="/direcory/on/host:/directory/in/container"></textarea>
         <span class="form_error form-error" ng-class="{'is-visible': GOINPUTNAME[Mounts].$error.server}" ng-show="GOINPUTNAME[Mounts].$error.server">{{GOINPUTNAME[Mounts].$error.server}}</span>
     </div>
 

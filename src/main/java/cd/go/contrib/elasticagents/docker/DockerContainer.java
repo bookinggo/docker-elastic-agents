@@ -117,17 +117,24 @@ public class DockerContainer {
             containerConfigBuilder.cmd(splitIntoLinesAndTrimSpaces(request.properties().get("Command")).toArray(new String[]{}));
         }
 
-        final HostConfig hostConfig =
-            HostConfig.builder()
-                .appendBinds(request.properties().get("Mounts"))
-                .extraHosts(request.properties().get("Hosts"))
-                .build();
+        final String hostConfig = request.properties().get("Hosts");
+        final String mountConfig = request.properties().get("Mounts");
+
+        final HostConfig newConfig;
+        if (StringUtils.isNotBlank(request.properties().get("Mounts"))) {
+            newConfig = HostConfig.builder()
+                 .appendBinds(mountConfig)
+                 .extraHosts(new Hosts(hostConfig)).build();
+        } else {
+            newConfig = HostConfig.builder()
+                 .extraHosts(new Hosts(hostConfig)).build();
+        }
 
         ContainerConfig containerConfig = containerConfigBuilder
                 .image(imageName)
                 .labels(labels)
                 .env(env)
-                .hostConfig(hostConfig)
+                .hostConfig(newConfig)
                 .build();
 
         ContainerCreation container = docker.createContainer(containerConfig, containerName);
